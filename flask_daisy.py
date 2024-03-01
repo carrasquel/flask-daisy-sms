@@ -4,6 +4,7 @@
     ~~~~
     Adds DaisySMS support to Flask applications
 """
+import requests
 
 
 __version__ = '1.0'
@@ -15,6 +16,7 @@ class DaisySMS:
     api_key = None
     client = None
     default_from = None
+    API_HANDLER = "https://daisysms.com/stubs/handler_api.php?"
 
     def __init__(self, app=None):
         if app:
@@ -25,26 +27,49 @@ class DaisySMS:
         self.api_key = app.config['DAISYSMS_API_KEY']
     
     def get_balance(self):
-        pass
+        response = requests.get(
+            self.API_HANDLER + f"api_key={self.api_key}&action=getBalance"
+        )
+
+        return response.json()
 
     def get_number(self, service, max_price):
-        pass
+        response = requests.get(
+            self.API_HANDLER + f"api_key={self.api_key}&action=getNumber&service={service}&max_price={max_price}"
+        )
+
+        return response.json()
 
     def get_status(self, number_id):
-        pass
+        response = requests.get(
+            self.API_HANDLER + f"api_key={self.api_key}&action=getStatus&id={number_id}"
+        )
+
+        return response.json()
 
     def set_status(self, number_id, status):
-        pass
+        response = requests.get(
+            self.API_HANDLER + f"api_key={self.api_key}&action=setStatus&id={number_id}&status={status}"
+        )
+
+        return response.json()
     
-    def mark_done(self, number_id):        
-        pass
+    def mark_done(self, number_id):
+        return self.set_status(number_id, 6)
 
     def cancel_rental(self, number_id):
-        pass
+        return self.set_status(number_id, 8)
 
     def get_prices_verification(self):
-        pass
+        response = requests.get(
+            self.API_HANDLER + f"api_key={self.api_key}&action=getPricesVerification"
+        )
+
+        return response.json()
 
     def get_prices(self):
-        pass
+        response = requests.get(
+            self.API_HANDLER + f"api_key={self.api_key}&action=getPrices"
+        )
 
+        return response.json()
