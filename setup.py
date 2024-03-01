@@ -52,7 +52,7 @@ _version = get_version()
 
 
 setup(
-    name='Flask-SendGrid',
+    name='Flask-DaisySMS',
     version=_version,
     url='https://github.com/carrasquel/flask-daisy-sms',
     license='MIT',
